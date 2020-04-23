@@ -1,0 +1,11 @@
+.space{
+    padding-left: 20px;
+    padding-top: 20px;
+}
+.control-label{
+
+    font-weight: bold;
+}
+.btn-primary{
+    font-weight: bold;
+}

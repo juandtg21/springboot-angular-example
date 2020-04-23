@@ -1,0 +1,46 @@
+
+<head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  
+
+    <div class="space">
+      <h1>Student Details</h1>
+    <form class="form-horizontal">
+      <div class="form-group form-inline">
+        <label class="control-label col-sm-1" for="firstName">First Name:</label>
+        <div class="col-sm-2">
+          <input class="form-control" id="firstName" disabled [(ngModel)]="student.firstName"  name="firstName">
+        </div>
+      </div>
+      <div class="form-group form-inline">
+          <label class="control-label col-sm-1"  for="lastName">Last Name:</label>
+          <div class="col-sm-2">
+            <input  class="form-control" id="lastName" disabled [(ngModel)]="student.lastName"      name="lastName">
+          </div>
+        </div>
+        <div class="form-group form-inline">
+          <label class="control-label col-sm-1" for="email">Email:</label>
+          <div class="col-sm-2">
+            <input  class="form-control" id="email" disabled [(ngModel)]="student.email" required  name="email">
+          </div>
+        </div>
+        <div *ngIf="message" class="alert alert-danger col-sm-3" role="alert">
+          <strong>Careful!</strong> {{message}}.
+        </div>
+      
+    </form>
+    <div class="form-group">        
+        <div class="control-label col-sm-2">
+          <button type="button" (click)="backtolist()" class="btn btn-primary">Back To List</button>
+        </div>
+      </div>
+  </div>
+  
+  </body>

@@ -1,0 +1,48 @@
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  
+  
+  
+  <div class="space">
+    <h1>Create Student</h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-1" for="firstName">First Name:</label>
+      <div class="col-sm-2">
+        <input type="firstName" class="form-control" id="firstName" [(ngModel)]="student.firstName" required placeholder="Type your first Name" name="firstName">
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-1" for="lastName">Last Name:</label>
+        <div class="col-sm-2">
+          <input type="lastName" class="form-control" id="lastName" [(ngModel)]="student.lastName" required placeholder="Type your last Name" name="lastName">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-1" for="email">Email:</label>
+        <div class="col-sm-2">
+          <input type="email" class="form-control" id="email" [(ngModel)]="student.email" required placeholder="Type your email" name="email">
+        </div>
+      </div>
+      <div *ngIf="message" class="alert alert-danger col-sm-3" role="alert">
+        <strong>Careful!</strong> {{message}}.
+      </div>
+    <div class="form-group">        
+      <div class="control-label col-sm-1">
+        <button type="button" (click)="createStudent()" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+
