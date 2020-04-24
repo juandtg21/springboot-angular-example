@@ -1,7 +1,6 @@
 import { OK } from './../model/httpStatus.model';
 import { StudentModel } from './../model/student.model';
 import {ActivatedRoute, Router} from  "@angular/router";
-import { StudentsComponent } from './../students/students.component';
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../students/student.service';
 
@@ -13,7 +12,7 @@ import { StudentService } from '../students/student.service';
 })
 export class UpdateStudentComponent implements OnInit {
   
-  student: StudentModel;
+  public student: StudentModel;
   id:number;
   public message: string="";
 
