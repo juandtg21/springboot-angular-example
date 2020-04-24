@@ -31,7 +31,7 @@ export class UpdateStudentComponent implements OnInit {
       
   }
   public updateStudent(): void{
-
+    
     this.updateService.updateStudent(this.student).subscribe(res=>{
       if(res.responseCode==OK){
         this.router.navigate(['/studentsComponent']);
