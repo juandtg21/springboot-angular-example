@@ -9,3 +9,7 @@
 .btn-primary{
     font-weight: bold;
 }
+.input{
+    border: none;
+    background-color:transparent;
+}

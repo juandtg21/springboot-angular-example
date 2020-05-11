@@ -1,11 +1,9 @@
 
-<div class="space">
-<h1>Students</h1>
-<table>
-    <tr>
-        <th scope="col"><button type="button" [routerLink]="['/studentsComponent']"  class="btn btn-primary">Students</button></th>
-        <th scope="col"><button type="button" [routerLink]="['/createStudentComponent']" class="btn btn-success">Add Student</button></th>
-    </tr>
-</table>
-</div>
+<app-menu></app-menu>
+<br><br>
+<div class="container">
 <router-outlet></router-outlet>
+</div>
+
+<br><br>
+<app-footer></app-footer>
