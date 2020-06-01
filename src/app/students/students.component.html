@@ -1,7 +1,8 @@
 <h1>Students</h1>
 <div class="container">
 
-  <div *ngIf="message" class="alert alert-success col-sm-3" role="alert">
+  <div *ngIf="message" class="alert alert-success alert-dismissable fade show col-sm-3" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span area-hidden="true">&times;</span></button>
     <strong>Success!</strong> {{message}}.
   </div>
 <table class="table">

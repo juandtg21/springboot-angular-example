@@ -44,5 +44,9 @@ export class UpdateStudentComponent implements OnInit {
       }
     });
   }
+  public backtolist(): void
+  {
+    this.router.navigate(['/studentsComponent']);
+  }
 
 }

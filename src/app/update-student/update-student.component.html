@@ -31,12 +31,16 @@
             <input type="text" class="form-control" id="email" [(ngModel)]="student.email" required  name="email">
           </div>
         </div>
-        <div *ngIf="message" class="alert alert-danger col-sm-3" role="alert">
+        <div *ngIf="message" class="alert alert-danger alert-dismissable fade show col-sm-4" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span area-hidden="true">&times;</span></button>
           <strong>Careful!</strong> {{message}}.
         </div>
       <div class="form-group">        
-        <div class="control-label col-sm-1">
-          <button type="button" (click)="updateStudent()"  class="btn btn-primary">Update</button>
+        <div class="control-label">
+          <div class="btn-group">
+          <button type="button" (click)="updateStudent()"  class="btn btn-success">Update</button>
+          <button type="button" (click)="backtolist()" class="btn btn-primary">Back To List</button>
+        </div>
         </div>
       </div>
     </form>
