@@ -25,20 +25,25 @@ import com.springapi.test.service.StudentServices;
 import com.springapi.test.util.RestResponse;
 
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
+@RequestMapping("/api")
 public class StudentController {
 	
 	@Autowired
 	protected StudentServices studentServices;
 	
-	
-	
 	protected ObjectMapper mapper;
 	
-	
-	
 	@RequestMapping(value="/createStudent", method=RequestMethod.POST)
+	@ApiOperation("Create students in DB with Id, firstName, lastName and email")
+	 @ApiResponses(value = { 
+		        @ApiResponse(code = 201, message = "student created", response = Student.class),
+		        @ApiResponse(code = 200, message = "successful") })
 	public RestResponse createStudent(@RequestBody String studentJson)
 			throws JsonParseException, JsonMappingException, IOException 
 	{
@@ -55,6 +60,8 @@ public class StudentController {
 		return new RestResponse(HttpStatus.CREATED.value(),"Student saved Successfully");
 	}
 	@RequestMapping(value="/updateStudent", method=RequestMethod.POST)
+	@ApiOperation("update and specific student with specific id")
+	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
 	public RestResponse updateStudent(@RequestBody String studentJson)
 			throws JsonParseException, JsonMappingException, IOException 
 	{
@@ -73,6 +80,8 @@ public class StudentController {
 	
 	
 	@GetMapping(value="/GetStudents")
+	@ApiOperation("Get all the students in DB")
+	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
 	public List<Student> GetStudents()
 	{
 		return this.studentServices.findAll();
@@ -80,7 +89,10 @@ public class StudentController {
 	
 	
 	@GetMapping(value="/getStudentById/{id}")
-	public Student GetStudentById(@PathVariable long id)
+	@ApiOperation("Get one student with specific Id")
+	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
+	public Student GetStudentById(@ApiParam(value="Id value for the student you need to retrieve",required=true)
+					@PathVariable long id)
 			throws Exception 
 	{
 		this.mapper = new ObjectMapper();
@@ -93,13 +105,14 @@ public class StudentController {
 			throw new Exception("Student not found");
 		}
 		return this.studentServices.getStudentById(student.getId());
-		
-		
-		
+
 	}
 	
 	@DeleteMapping(value="/deleteStudent/{id}")
-	public RestResponse DeleteStudent(@PathVariable long id)
+	@ApiOperation("Delete one student with specific Id")
+	@ApiResponses(value= {@ApiResponse(code = 204, message = "NO_CONTENT",response=Student.class)})
+	public RestResponse DeleteStudent(@ApiParam(value="Id value for the student you need to delete",required=true)
+						@PathVariable long id)
 			throws Exception 
 	{
 		Student student = this.studentServices.getStudentById(id);

@@ -14,6 +14,7 @@ public class RestResponse {
 		this.responseCode = responseCode;
 	}
 
+	
 	public RestResponse(Integer responseCode, String message) {
 		super();
 		this.responseCode = responseCode;

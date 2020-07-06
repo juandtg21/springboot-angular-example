@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public class ParentEntity implements Serializable {
@@ -19,6 +21,7 @@ public class ParentEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", unique = true, nullable = false)
+	@ApiModelProperty("the unique Id of the student")
 	private Long id;
 
 	public Long getId() {
