@@ -40,7 +40,7 @@ public class StudentController {
 	protected ObjectMapper mapper;
 	
 	@RequestMapping(value="/createStudent", method=RequestMethod.POST)
-	@ApiOperation("Create students in DB with these fields Id, firstName, lastName and email")
+	@ApiOperation("Create students in DB with Id, firstName, lastName and email")
 	 @ApiResponses(value = { 
 		        @ApiResponse(code = 201, message = "student created", response = Student.class),
 		        @ApiResponse(code = 200, message = "successful") })
