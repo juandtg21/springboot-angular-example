@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name="students")
 @Access(AccessType.FIELD)
-@ApiModel(description="Definition of students")
+@ApiModel(description="Definition of all students")
 public class Student extends ParentEntity {
 
 	
