@@ -9,11 +9,15 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name="students")
 @Access(AccessType.FIELD)
 @ApiModel(description="Definition of all students")
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class Student extends ParentEntity {
 
 	
@@ -32,32 +36,5 @@ public class Student extends ParentEntity {
 	@ApiModelProperty("the student email")
 	private String email;
 
-	
-	
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	
 
 }

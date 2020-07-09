@@ -1,0 +1,11 @@
+com\springapi\test\util\QueryResult.class
+com\springapi\test\model\ParentEntity.class
+com\springapi\test\model\Student.class
+com\springapi\test\util\RestResponse.class
+com\springapi\test\service\StudentServicesImplement.class
+com\springapi\test\service\StudentServices.class
+com\springapi\test\swagger\swaggerConfig.class
+com\springapi\test\controller\StudentController.class
+com\springapi\test\dao\StudentRepository.class
+com\springapi\test\IndexController.class
+com\springapi\test\TestApplication.class

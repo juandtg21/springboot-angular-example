@@ -12,8 +12,11 @@ import javax.persistence.MappedSuperclass;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import lombok.Data;
+
 @MappedSuperclass
 @Access(AccessType.FIELD)
+@Data
 public class ParentEntity implements Serializable {
 
 	private static final long serialVersionUID = -4611815928732870812L;
@@ -24,12 +27,5 @@ public class ParentEntity implements Serializable {
 	@ApiModelProperty("the unique Id of the student")
 	private Long id;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 }
