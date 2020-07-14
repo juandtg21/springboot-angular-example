@@ -9,12 +9,13 @@ import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 
 
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,9 +30,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
+
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping("/api")
+
+@RequestMapping(path = "api", produces = "application/json")
 public class StudentController {
 	
 	@Autowired
@@ -39,7 +43,7 @@ public class StudentController {
 	
 	protected ObjectMapper mapper;
 	
-	@RequestMapping(value="/createStudent", method=RequestMethod.POST)
+	@RequestMapping(value="/private/createStudent", method=RequestMethod.POST)
 	@ApiOperation("Create students in DB with Id, firstName, lastName and email")
 	 @ApiResponses(value = { 
 		        @ApiResponse(code = 201, message = "student created", response = Student.class),
@@ -59,7 +63,8 @@ public class StudentController {
 		this.studentServices.save(student);
 		return new RestResponse(HttpStatus.CREATED.value(),"Student saved Successfully");
 	}
-	@RequestMapping(value="/updateStudent", method=RequestMethod.POST)
+	
+	@RequestMapping(value="/private/updateStudent", method=RequestMethod.POST)
 	@ApiOperation("update and specific student with specific id")
 	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
 	public RestResponse updateStudent(@RequestBody String studentJson)
@@ -79,7 +84,7 @@ public class StudentController {
 	}
 	
 	
-	@GetMapping(value="/GetStudents")
+	@RequestMapping(value="/private/GetStudents",method=RequestMethod.GET)
 	@ApiOperation("Get all the students in DB")
 	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
 	public List<Student> GetStudents()
@@ -88,7 +93,7 @@ public class StudentController {
 	}
 	
 	
-	@GetMapping(value="/getStudentById/{id}")
+	@RequestMapping(value="/private/getStudentById/{id}",method=RequestMethod.GET)
 	@ApiOperation("Get one student with specific Id")
 	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
 	public Student GetStudentById(@ApiParam(value="Id value for the student you need to retrieve",required=true)
@@ -108,7 +113,7 @@ public class StudentController {
 
 	}
 	
-	@DeleteMapping(value="/deleteStudent/{id}")
+	@DeleteMapping(value="/private/deleteStudent/{id}")
 	@ApiOperation("Delete one student with specific Id")
 	@ApiResponses(value= {@ApiResponse(code = 204, message = "NO_CONTENT",response=Student.class)})
 	public RestResponse DeleteStudent(@ApiParam(value="Id value for the student you need to delete",required=true)

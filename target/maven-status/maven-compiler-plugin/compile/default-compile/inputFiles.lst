@@ -6,6 +6,8 @@ D:\springproject\test\src\main\java\com\springapi\test\controller\StudentControl
 D:\springproject\test\src\main\java\com\springapi\test\service\StudentServices.java
 D:\springproject\test\src\main\java\com\springapi\test\model\Student.java
 D:\springproject\test\src\main\java\com\springapi\test\TestApplication.java
-D:\springproject\test\src\main\java\com\springapi\test\model\ParentEntity.java
 D:\springproject\test\src\main\java\com\springapi\test\IndexController.java
 D:\springproject\test\src\main\java\com\springapi\test\dao\StudentRepository.java
+D:\springproject\test\src\main\java\com\springapi\test\auth0\AudienceValidator.java
+D:\springproject\test\src\main\java\com\springapi\test\auth0\SecurityConfig.java
+D:\springproject\test\src\main\java\com\springapi\test\model\ParentEntity.java
