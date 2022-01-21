@@ -6,7 +6,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -15,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +34,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.minidev.json.JSONObject;
 
 
 @CrossOrigin(origins="http://localhost:4200")
@@ -39,9 +44,17 @@ import io.swagger.annotations.ApiResponses;
 public class StudentController {
 	
 	@Autowired
+	RestTemplate restTemplate;
+	
+	@Autowired
 	protected StudentServices studentServices;
 	
 	protected ObjectMapper mapper;
+	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 	
 	@RequestMapping(value="/private/createStudent", method=RequestMethod.POST)
 	@ApiOperation("Create students in DB with Id, firstName, lastName and email")
@@ -82,7 +95,6 @@ public class StudentController {
 		this.studentServices.save(student);
 		return new RestResponse(HttpStatus.OK.value(),"Student updated Successfully");
 	}
-	
 	
 	@RequestMapping(value="/private/GetStudents",method=RequestMethod.GET)
 	@ApiOperation("Get all the students in DB")
@@ -130,6 +142,19 @@ public class StudentController {
 		return new RestResponse(HttpStatus.NO_CONTENT.value()," Student " + student.getFirstName() + " " + student.getLastName() + " deleted Successfully");
 		
 	}
+	
+	@RequestMapping(value = "/token")
+    public String getToken(){
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        JSONObject body = new JSONObject();
+        body.put("client_id", "K8OJ5efXDpGFTpwbHBKeKoP027sxWR1c");
+        body.put("client_secret", "1MrySRB0dKMvdCH2EVnrW9CZwTafffomhdqDY9aupUBetDNohsGlp3rk6_WmHZp3");
+        body.put("audience", "localhost:8080/api");
+        body.put("grant_type", "client_credentials");
+        HttpEntity<JSONObject> entity=new HttpEntity<JSONObject>(body, headers);
+        return restTemplate.exchange("https://dev-qk7vctdg.us.auth0.com/oauth/token",HttpMethod.POST,entity,String.class).getBody();
+    }
 	
 	private boolean validate(Student student)
 	{

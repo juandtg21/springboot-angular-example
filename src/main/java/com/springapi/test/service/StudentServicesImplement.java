@@ -34,10 +34,5 @@ public class StudentServicesImplement implements StudentServices {
 	public Student getStudentById(Long id) {
 		return this.studentRepository.findById(id).orElse(null);
 	}
-
-	
-		
-	
-
 }
 
