@@ -148,12 +148,12 @@ public class StudentController {
         HttpHeaders headers=new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         JSONObject body = new JSONObject();
-        body.put("client_id", "K8OJ5efXDpGFTpwbHBKeKoP027sxWR1c");
-        body.put("client_secret", "1MrySRB0dKMvdCH2EVnrW9CZwTafffomhdqDY9aupUBetDNohsGlp3rk6_WmHZp3");
+        body.put("client_id", "your_client_id");
+        body.put("client_secret", "your_client_secret");
         body.put("audience", "localhost:8080/api");
         body.put("grant_type", "client_credentials");
         HttpEntity<JSONObject> entity=new HttpEntity<JSONObject>(body, headers);
-        return restTemplate.exchange("https://dev-qk7vctdg.us.auth0.com/oauth/token",HttpMethod.POST,entity,String.class).getBody();
+        return restTemplate.exchange("your_domain",HttpMethod.POST,entity,String.class).getBody();
     }
 	
 	private boolean validate(Student student)
