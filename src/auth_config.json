@@ -1,0 +1,7 @@
+{
+    "domain": "your_domain",
+    "clientId": "your_client_di",
+    "clientSecret" : "your_client_secret",
+    "audience":"your_audience",
+    "serverUrl": "http://localhost:8080"
+}

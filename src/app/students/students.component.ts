@@ -50,9 +50,6 @@ export class StudentsComponent implements OnInit {
         this.loadStudent();
      }
    });    
-    
-    
-
   }
 
 }

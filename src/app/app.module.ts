@@ -1,8 +1,8 @@
 import { StudentService } from './students/student.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from "@angular/common/http";
-
+import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,12 @@ import { DetailStudentComponent } from './detail-student/detail-student.componen
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+import { LoginComponent } from './login/login.component';
+import { AuthorizationHeaderProvider } from './auth/auth.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,15 +28,31 @@ import { FooterComponent } from './footer/footer.component';
     UpdateStudentComponent,
     DetailStudentComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+
+    AuthModule.forRoot({
+      ...env.auth,
+      httpInterceptor: {
+        allowedList: [
+        {
+          uri: '`${env.dev.serverUrl}/api/private/GetStudents`',
+          tokenOptions: {
+            audience: env.auth.audience
+          },
+        },
+      ],
+      },
+    }),
   ],
-  providers: [StudentService],
+  providers: [StudentService, AuthorizationHeaderProvider,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
