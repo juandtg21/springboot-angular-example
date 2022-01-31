@@ -1,5 +1,6 @@
 <div *ngIf="auth.user$ | async as user">
-    <label class="text-primary">{{ user.name }}</label>
-    <button class="btn btn-primary" (click)="login()" *ngIf="!(auth.isAuthenticated$ | async)">Log-in</button>
-    <button class="btn btn-danger ml-5" (click)="logout()" *ngIf="auth.isAuthenticated$ | async">Log-out</button>
+    <div>
+        <img src="{{user.picture}}"  class="rounded-circle">
+    </div>
+    <label>{{ user.name }}</label>
 </div>
