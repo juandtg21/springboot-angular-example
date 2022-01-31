@@ -42,7 +42,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
       httpInterceptor: {
         allowedList: [
         {
-          uri: '`${env.dev.serverUrl}/api/private/GetStudents`',
+          uri: `${env.dev.serverUrl}/api/private/GetStudents`,
           tokenOptions: {
             audience: env.auth.audience
           },
