@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from '@auth0/auth0-angular';
 
 const routes: Routes =[
-  {path:'',redirectTo:'/studentsComponent',pathMatch:'full', canActivate: [AuthGuard]},
+  {path:'',redirectTo:'/loginComponent',pathMatch:'full', canActivate: [AuthGuard]},
   {path:'appComponent',component:AppComponent},
   {path:'studentsComponent',component:StudentsComponent},
   {path:'createStudentComponent',component:CreateStudentComponent},
