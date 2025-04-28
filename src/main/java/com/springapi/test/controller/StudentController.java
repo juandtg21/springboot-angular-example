@@ -4,14 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -22,158 +17,121 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.springapi.test.model.Student;
 import com.springapi.test.service.StudentServices;
 import com.springapi.test.util.RestResponse;
 
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import net.minidev.json.JSONObject;
 
-
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 
 @RequestMapping(path = "api", produces = "application/json")
 public class StudentController {
-	
-	@Autowired
-	RestTemplate restTemplate;
-	
-	@Autowired
-	protected StudentServices studentServices;
-	
-	protected ObjectMapper mapper;
-	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
-	
-	@RequestMapping(value="/private/createStudent", method=RequestMethod.POST)
-	@ApiOperation("Create students in DB with Id, firstName, lastName and email")
-	 @ApiResponses(value = { 
-		        @ApiResponse(code = 201, message = "student created", response = Student.class),
-		        @ApiResponse(code = 200, message = "successful") })
-	public RestResponse createStudent(@RequestBody String studentJson)
-			throws JsonParseException, JsonMappingException, IOException 
-	{
-		this.mapper = new ObjectMapper();
-		
-	
-		Student student = this.mapper.readValue(studentJson, Student.class);
-		
-		if(!this.validate(student))
-		{
-			return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(),"You must need to fill these fields");
-		}
-		this.studentServices.save(student);
-		return new RestResponse(HttpStatus.CREATED.value(),"Student saved Successfully");
-	}
-	
-	@RequestMapping(value="/private/updateStudent", method=RequestMethod.POST)
-	@ApiOperation("update and specific student with specific id")
-	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
-	public RestResponse updateStudent(@RequestBody String studentJson)
-			throws JsonParseException, JsonMappingException, IOException 
-	{
-		this.mapper = new ObjectMapper();
-		
-	
-		Student student = this.mapper.readValue(studentJson, Student.class);
-		
-		if(!this.validate(student))
-		{
-			return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(),"You must need to fill this fields");
-		}
-		this.studentServices.save(student);
-		return new RestResponse(HttpStatus.OK.value(),"Student updated Successfully");
-	}
-	
-	@RequestMapping(value="/private/GetStudents",method=RequestMethod.GET)
-	@ApiOperation("Get all the students in DB")
-	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
-	public List<Student> GetStudents()
-	{
-		return this.studentServices.findAll();
-	}
-	
-	
-	@RequestMapping(value="/private/getStudentById/{id}",method=RequestMethod.GET)
-	@ApiOperation("Get one student with specific Id")
-	@ApiResponses(value= {@ApiResponse(code = 200, message = "Ok",response=Student.class)})
-	public Student GetStudentById(@ApiParam(value="Id value for the student you need to retrieve",required=true)
-					@PathVariable long id)
-			throws Exception 
-	{
-		this.mapper = new ObjectMapper();
-		
 
-		Student student = this.studentServices.getStudentById(id);
-		
-		if(student.getId()==null)
-		{
-			throw new Exception("Student not found");
-		}
-		return this.studentServices.getStudentById(student.getId());
+    RestTemplate restTemplate;
 
-	}
-	
-	@DeleteMapping(value="/private/deleteStudent/{id}")
-	@ApiOperation("Delete one student with specific Id")
-	@ApiResponses(value= {@ApiResponse(code = 204, message = "NO_CONTENT",response=Student.class)})
-	public RestResponse DeleteStudent(@ApiParam(value="Id value for the student you need to delete",required=true)
-						@PathVariable long id)
-			throws Exception 
-	{
-		Student student = this.studentServices.getStudentById(id);
-		
-		if(student.getId()==null)
-		{
-			throw new Exception("Student not found");
-		}
-		this.studentServices.deleteStudent(student.getId());
-		return new RestResponse(HttpStatus.NO_CONTENT.value()," Student " + student.getFirstName() + " " + student.getLastName() + " deleted Successfully");
-		
-	}
-	
-	@RequestMapping(value = "/token")
-    public String getToken(){
-        HttpHeaders headers=new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        JSONObject body = new JSONObject();
-        body.put("client_id", "your_client_id");
-        body.put("client_secret", "your_client_secret");
-        body.put("audience", "localhost:8080/api");
-        body.put("grant_type", "client_credentials");
-        HttpEntity<JSONObject> entity=new HttpEntity<JSONObject>(body, headers);
-        return restTemplate.exchange("your_domain",HttpMethod.POST,entity,String.class).getBody();
+    protected StudentServices studentServices;
+
+    protected ObjectMapper mapper;
+
+    public StudentController(RestTemplate restTemplate, StudentServices studentServices, ObjectMapper mapper) {
+        this.restTemplate = restTemplate;
+        this.studentServices = studentServices;
+        this.mapper = mapper;
     }
-	
-	private boolean validate(Student student)
-	{
-		
-		boolean isvalid=true;
-		
-		
-		if(StringUtils.trimToNull(student.getFirstName())==null)
-		{
-			isvalid=false;
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @RequestMapping(value = "/private/createStudent", method = RequestMethod.POST)
+    @ApiOperation("Create students in DB with Id, firstName, lastName and email")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "student created", response = Student.class),
+        @ApiResponse(code = 200, message = "successful")})
+    public RestResponse createStudent(@RequestBody String studentJson)
+        throws JsonParseException, IOException {
+        this.mapper = new ObjectMapper();
+
+        Student student = this.mapper.readValue(studentJson, Student.class);
+
+        if (this.hasNoValidStudentInfo(student)) {
+            return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "You must need to fill these fields");
+        }
+        this.studentServices.save(student);
+        return new RestResponse(HttpStatus.CREATED.value(), "Student saved Successfully");
+    }
+
+    @RequestMapping(value = "/private/updateStudent", method = RequestMethod.POST)
+    @ApiOperation("update and specific student with specific id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = Student.class)})
+    public RestResponse updateStudent(@RequestBody String studentJson)
+        throws JsonParseException, IOException {
+        this.mapper = new ObjectMapper();
+
+
+        Student student = this.mapper.readValue(studentJson, Student.class);
+
+        if (this.hasNoValidStudentInfo(student)) {
+            return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "You must need to fill this fields");
+        }
+        this.studentServices.save(student);
+        return new RestResponse(HttpStatus.OK.value(), "Student updated Successfully");
+    }
+
+    @RequestMapping(value = "/private/GetStudents", method = RequestMethod.GET)
+    @ApiOperation("Get all the students in DB")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = Student.class)})
+    public List<Student> GetStudents() {
+        return this.studentServices.findAll();
+    }
+
+    @RequestMapping(value = "/private/getStudentById/{id}", method = RequestMethod.GET)
+    @ApiOperation("Get one student with specific Id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = Student.class)})
+    public Student GetStudentById(@ApiParam(value = "Id value for the student you need to retrieve", required = true)
+                                  @PathVariable long id)
+        throws Exception {
+        this.mapper = new ObjectMapper();
+
+        Student student = this.studentServices.getStudentById(id);
+
+        if (student.getId() == null) {
+            throw new Exception("Student not found");
+        }
+        return this.studentServices.getStudentById(student.getId());
+
+    }
+
+    @DeleteMapping(value = "/private/deleteStudent/{id}")
+    @ApiOperation("Delete one student with specific Id")
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "NO_CONTENT", response = Student.class)})
+    public RestResponse DeleteStudent(@ApiParam(value = "Id value for the student you need to delete", required = true)
+                                      @PathVariable long id)
+        throws Exception {
+        Student student = this.studentServices.getStudentById(id);
+
+        if (student.getId() == null) {
+            throw new Exception("Student not found");
+        }
+        this.studentServices.deleteStudent(student.getId());
+        return new RestResponse(HttpStatus.NO_CONTENT.value(), " Student " + student.getFirstName() + " " + student.getLastName() + " deleted Successfully");
+    }
+
+	private boolean hasNoValidStudentInfo(Student student) {
+		if (student == null) {
+			return true;
 		}
-		if(StringUtils.trimToNull(student.getLastName())==null)
-		{
-			isvalid=false;
-		}
-		if(StringUtils.trimToNull(student.getEmail())==null)
-		{
-			isvalid=false;
-		}
-		return isvalid;
+
+		return StringUtils.trimToNull(student.getFirstName()) == null &&
+			StringUtils.trimToNull(student.getLastName()) == null &&
+			StringUtils.trimToNull(student.getEmail()) == null;
 	}
 }

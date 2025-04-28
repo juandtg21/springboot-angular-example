@@ -10,9 +10,11 @@ import com.springapi.test.model.Student;
 
 @Service
 public class StudentServicesImplement implements StudentServices {
-	
-	@Autowired
 	protected StudentRepository studentRepository;
+
+	public StudentServicesImplement(StudentRepository studentRepository) {
+		this.studentRepository = studentRepository;
+	}
 
 	@Override
 	public Student save(Student student) {
@@ -27,7 +29,6 @@ public class StudentServicesImplement implements StudentServices {
 	@Override
 	public void deleteStudent(Long id) {
 		this.studentRepository.deleteById(id);
-		
 	}
 
 	@Override
@@ -35,4 +36,3 @@ public class StudentServicesImplement implements StudentServices {
 		return this.studentRepository.findById(id).orElse(null);
 	}
 }
-

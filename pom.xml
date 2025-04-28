@@ -49,7 +49,6 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-	
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -85,10 +84,7 @@
 	        <groupId>org.springframework.security</groupId>
 	        <artifactId>spring-security-config</artifactId>
 	    </dependency>
-			
-		
-		
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -103,8 +99,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			
-		
 		</dependency>
 	</dependencies>
 

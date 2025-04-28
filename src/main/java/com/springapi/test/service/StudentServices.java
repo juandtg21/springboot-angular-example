@@ -5,8 +5,6 @@ import java.util.List;
 import com.springapi.test.model.Student;
 
 public interface StudentServices {
-
-
 	Student save(Student student);
 
 	List<Student> findAll();
@@ -14,6 +12,4 @@ public interface StudentServices {
 	void deleteStudent(Long id);
 
 	Student getStudentById(Long id);
-
-
 }

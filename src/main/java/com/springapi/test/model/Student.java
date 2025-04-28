@@ -19,9 +19,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class Student extends ParentEntity {
-
-	
-	
 	private static final long serialVersionUID = 4460017144555027875L;
 
 	@Column(name="first_Name",nullable=false,length=255)
@@ -35,6 +32,4 @@ public class Student extends ParentEntity {
 	@Column(name="email",nullable=false,length=255)
 	@ApiModelProperty("the student email")
 	private String email;
-
-
 }

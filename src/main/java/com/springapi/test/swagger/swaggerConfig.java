@@ -31,13 +31,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class swaggerConfig {
-
-
-
     @Bean
     public Docket swaggerSpringfoxDocket() {
-       
-
         return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .securityContexts(Lists.newArrayList(securityContext()))
@@ -47,12 +42,11 @@ public class swaggerConfig {
             .build();
     }
 
-
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
     }
-    private ApiInfo apiInfo() {
 
+    private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title("Student REST API example")
 				.description("RESTful Api for Students")
@@ -60,8 +54,7 @@ public class swaggerConfig {
 				.version("1.0")
 				.build();
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	private Predicate<String> paths() {
 	    return or(

@@ -26,6 +26,4 @@ public class ParentEntity implements Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	@ApiModelProperty("the unique Id of the student")
 	private Long id;
-
-
 }
