@@ -1,24 +1,24 @@
 import { StudentService } from './students/student.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
-import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StudentsComponent } from './students/students.component';
 import { CreateStudentComponent } from './create-student/create-student.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import { UpdateStudentComponent } from './update-student/update-student.component';
 import { DetailStudentComponent } from './detail-student/detail-student.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
-import { AuthModule } from '@auth0/auth0-angular';
-import { environment as env } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
-import { AuthorizationHeaderProvider } from './auth/auth.service';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AuthInterceptor } from './auth/auth-interceptor.service';
+import { AuthService } from './auth/auth.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { RegistrationComponent } from './registration/registration.component';
+
 
 @NgModule({
   declarations: [
@@ -29,30 +29,22 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     DetailStudentComponent,
     MenuComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-
-    AuthModule.forRoot({
-      ...env.auth,
-      httpInterceptor: {
-        allowedList: [
-        {
-          uri: `${env.dev.serverUrl}/api/private/GetStudents`,
-          tokenOptions: {
-            audience: env.auth.audience
-          },
-        },
-      ],
-      },
-    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('authToken')
+      }
+    })
   ],
-  providers: [StudentService, AuthorizationHeaderProvider,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },],
+  providers: [StudentService,  AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

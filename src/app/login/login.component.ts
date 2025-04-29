@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
-// Import the AuthService type from the SDK
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +8,26 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  // Inject the authentication service into your component through the constructor
-  constructor(public auth: AuthService) {}
+  username = '';
+  password = '';
+  errorMessage = '';
 
-  login(): void {
-    // Call this to redirect the user to the login page
-    this.auth.loginWithRedirect();
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  logout(): void {
-    this.auth.logout();
+  onSubmit(): void {
+    this.authService.login(this.username, this.password).subscribe(
+      (response: any) => {
+        this.authService.saveToken(response.token);
+        this.router.navigate(['/studentsComponent']).then(() => {
+          // Navigation complete, you can add any post-navigation logic here if needed
+        }).catch((err) => {
+          // Handle error if navigation fails
+          console.error('Navigation error:', err);
+        });
+      },
+      (error) => {
+        this.errorMessage = error + '. Invalid credentials';
+      }
+    );
   }
 }

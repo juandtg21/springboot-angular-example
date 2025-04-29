@@ -1,0 +1,24 @@
+<div class="registration-form">
+  <h2>Register</h2>
+  <form (ngSubmit)="register()" #registrationForm="ngForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.form.valid">Register</button>
+  </form>
+
+  <!-- Display the message -->
+  <div *ngIf="message" [ngClass]="{'alert': true, 'alert-success': messageType === 'success', 'alert-danger': messageType === 'error'}">
+    {{ message }}
+  </div>
+
+  <!-- Back to Login button -->
+  <div class="mt-3">
+    <button class="btn btn-link" (click)="goToLogin()">Back to Login</button>
+  </div>
+</div>
