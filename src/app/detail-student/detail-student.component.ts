@@ -10,20 +10,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DetailStudentComponent implements OnInit {
   student: StudentModel;
-  id:number;
-  public message: string="";
-  
-  constructor(private detailService:StudentService, private route: ActivatedRoute, private router:Router) { }
+  id: number;
+  public message = '';
+
+  constructor(private detailService: StudentService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.loadStudent();
   }
-  public loadStudent():void{
-    this.id=this.route.snapshot.params['id'];
-    this.detailService.getStudent(this.id).subscribe(res=>{this.student=res});
-      
+  public loadStudent(): void{
+    this.id = this.route.snapshot.params.id;
+    this.detailService.getStudent(this.id).subscribe(res => {this.student = res; });
   }
-  public backtolist(): void
+  public backToList(): void
   {
     this.router.navigate(['/studentsComponent']);
   }
