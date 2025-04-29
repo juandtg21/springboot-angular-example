@@ -233,3 +233,4 @@ $RECYCLE.BIN/
 *.max
 
 # End of https://www.gitignore.io/api/images
+/target/

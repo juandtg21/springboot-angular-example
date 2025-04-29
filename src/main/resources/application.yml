@@ -1,8 +1,0 @@
-auth0:
-  audience: your_audience
-spring:
-  security:
-    oauth2:
-        resourceserver:
-            jwt:
-                issuer-uri: your_domain

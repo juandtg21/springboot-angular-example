@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.json.JsonParseException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,25 +28,15 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-
 @RequestMapping(path = "api", produces = "application/json")
 public class StudentController {
 
-    RestTemplate restTemplate;
+    private final StudentServices studentServices;
+    private final ObjectMapper mapper;
 
-    protected StudentServices studentServices;
-
-    protected ObjectMapper mapper;
-
-    public StudentController(RestTemplate restTemplate, StudentServices studentServices, ObjectMapper mapper) {
-        this.restTemplate = restTemplate;
+    public StudentController(StudentServices studentServices, ObjectMapper mapper) {
         this.studentServices = studentServices;
-        this.mapper = mapper;
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+        this.mapper = new ObjectMapper();
     }
 
     @RequestMapping(value = "/private/createStudent", method = RequestMethod.POST)
@@ -58,7 +46,6 @@ public class StudentController {
         @ApiResponse(code = 200, message = "successful")})
     public RestResponse createStudent(@RequestBody String studentJson)
         throws JsonParseException, IOException {
-        this.mapper = new ObjectMapper();
 
         Student student = this.mapper.readValue(studentJson, Student.class);
 
@@ -74,9 +61,6 @@ public class StudentController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = Student.class)})
     public RestResponse updateStudent(@RequestBody String studentJson)
         throws JsonParseException, IOException {
-        this.mapper = new ObjectMapper();
-
-
         Student student = this.mapper.readValue(studentJson, Student.class);
 
         if (this.hasNoValidStudentInfo(student)) {
@@ -99,8 +83,6 @@ public class StudentController {
     public Student GetStudentById(@ApiParam(value = "Id value for the student you need to retrieve", required = true)
                                   @PathVariable long id)
         throws Exception {
-        this.mapper = new ObjectMapper();
-
         Student student = this.studentServices.getStudentById(id);
 
         if (student.getId() == null) {
